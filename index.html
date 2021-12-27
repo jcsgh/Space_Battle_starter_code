@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Space Battle</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,37 +13,174 @@
 <body>
     <div class="bodyContainer">
 
-        <div class="mainCharacterView left" >
+        <div class="mainCharacterView left">
                 <div class="nameBox">USS Schwarzenegger</div>
                 <div class="playerImage"></div>
-                <div class="playerStats">
+                <div class="playerStats" id="playerStats">
 
-                Hull : 15 <br>
+                Hull : 20 <br>
                 FirePower : 5 <br>
                 Accuracy : .7 <br>
 
-z
 
                 </div>
 
         </div>
+
+        <!-- <div class="mainCharacterView">
+
+            <button id="playBtn">Play</button>
+
+        </div> -->
+       
 
 
         <div class="mainCharacterView right">
            
             <div class="nameBox">Enemy</div>
             <div class="enemyImage"></div>
-                <div class="enemyStats">
-                    Hull : 6 <br>
+                <div class="enemyStats" id="enemyStats">
+
+                    
+
+                    <!-- Hull : 6 <br>
                     FirePower : 3 <br>
                     Accuracy : .6 <br>
-    
-    
+     -->
                 </div>
             
         </div>
 
 
-    <script src="app.js"></script>
+    <script> 
+
+        /* Build a game of battling alien spaceships using Javascript. Earth has been attacked by a horde of aliens! 
+        You are the captain of the USS Schwarzenegger, on a mission to destroy every last alien ship. Battle the aliens
+        as you try to destroy them with your lasers. There are six alien ships. The aliens' weakness is that they are
+        too logical and attack one at a time: they will wait to see the outcome of a battle before deploying another
+        alien ship. Your strength is that you have the initiative and get to attack first. However, you do not have
+        targeting lasers and can only attack the aliens in order. After you have destroyed a ship, you have the 
+        option to make a hasty retreat. */
+
+        /* You attack the first alien ship - If the ship survives, it attacks you - If you survive, you attack the ship again 
+        - If it survives, it attacks you again - Etc. - If you destroy the ship, you have the option to **attack** 
+    `   the next ship or to **retreat** - If you retreat, the game is over, perhaps leaving the game open for further 
+        developments or options. - You win the game if you destroy all of the aliens. - You lose the game if you are destroyed. 
+        */
+
+        // variables
+        let playerStats = document.getElementById("playerStats")
+        let enemyStats = document.getElementById("enemyStats")
+
+
+        
+
+        // create spaceship objects
+
+        let mySpaceship = {
+
+            hull: 20,
+            firePower: 6,
+            accuracy: .7,
+
+            attack() {
+
+            }
+        }
+
+        let enemySpaceship = {
+           
+            
+            hull: Math.floor(Math.random() * (7 - 3) + 3),  // picks a random number between 3 and 6
+            firePower: Math.floor(Math.random() * (5 - 2) + 2),
+            accuracy: Math.random() * (.9 - .6) + .6,
+     
+            
+
+            attack() {
+
+            }
+        }
+
+        
+        // add hull, firepower, and accuracy stats to enemy stats
+
+        let para = document.createElement("p")
+        const enemyHull = document.createTextNode(`Hull : ${enemySpaceship.hull}`);
+        para.appendChild(enemyHull)
+        enemyStats.appendChild(enemyHull)
+
+
+        br(enemyStats)
+
+
+        para = document.createElement("p")
+        const enemyFirePower = document.createTextNode(`Firepower : ${enemySpaceship.firePower}`);
+        para.appendChild(enemyFirePower)
+        enemyStats.appendChild(enemyFirePower)
+
+        br(enemyStats)
+
+
+        para = document.createElement("p")
+        const enemyAccuracy = document.createTextNode(`Accuracy : ${enemySpaceship.accuracy}`);
+        para.appendChild(enemyAccuracy)
+        enemyStats.appendChild(enemyAccuracy)
+
+
+
+        // function to add break statement 
+        function br(where) {
+            let br = document.createElement("br");
+            where.appendChild(br)
+        }
+
+
+        
+
+
+
+        // have mySpaceship attack enemySpaceship
+        // if successfully hit, decrease hull
+        // if enemySpaceship still alive, sttack my spaceship
+        // else prompt user if they want to attack or retreat
+        // if user retreats, end game
+        // else, bring out next enemy ship and repeat until player either wins or loses the game
+
+
+
+        // alert user of the story at hand 
+        // alert("Earth has been attacked by a horde of aliens! ")
+
+        // create new enemy spaceShip with random hull, firepower, accuracy
+
+
+
+
+
+
+    
+        //create dom elements for the spaceships
+        // let mySpaceship = document.getElementsByClassName("mainCharacterView");
+        // let enemySpaceship = document.getElementsByClassName("right");
+        // let playBtn = document.getElementById("playBtn")
+
+        // prompt user 
+        
+
+        // a function that runs when the player chooses to press the play game button 
+        // once the user enters the game, the main menu items are cleared 
+        
+
+        // a how to play button that brings up a pop up explanation of how to play
+
+        // function clicked() {
+        //     console.log("my spaceship clicked")
+        // }
+
+        // mySpaceship.addEventListener("click", clicked)
+        
+    
+    </script>
 </body>
 </html>
