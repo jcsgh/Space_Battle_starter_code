@@ -81,7 +81,7 @@
 
             hull: 20,
             firePower: 6,
-            accuracy: .7,
+            accuracy: 0.7,
 
             attack() {
 
@@ -93,7 +93,7 @@
             
             hull: Math.floor(Math.random() * (7 - 3) + 3),  // picks a random number between 3 and 6
             firePower: Math.floor(Math.random() * (5 - 2) + 2),
-            accuracy: Math.random() * (.9 - .6) + .6,
+            accuracy: (Math.random() * (.9 - .6) + .6).toFixed(1),
      
             
 
@@ -101,6 +101,8 @@
 
             }
         }
+
+        // add hull, firepower, and accuracy stats to player stats
 
         
         // add hull, firepower, and accuracy stats to enemy stats
