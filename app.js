@@ -39,9 +39,11 @@ let playerStats = document.getElementById("playerStats")
 let enemyStats = document.getElementById("enemyStats")
 let playBtn = document.getElementById("playBtn")
 let i = 0;
+let alienShipsArr = []
 let enemyHull;
 let enemyFirepower;
 let enemyAccuracy;
+let played = false;
 
 // creates class of alien spaceships
 class alienShip {
@@ -55,7 +57,7 @@ class alienShip {
     attack(spaceship) {
 
         if (Math.random() < alienShipsArr[i].accuracy) {
-            alert("The alien spaceship hits the USS Schwarzenegger!")
+            alert("You hear a loud PING and you feel the spaceship rattle. The lights flicker. You've been hit!")
             spaceship.hull = spaceship.hull - alienShipsArr[i].firePower;
             playerHull.nodeValue = `Hull : ${USS.hull}`;
             if (spaceship.hull <= 0) {
@@ -65,12 +67,11 @@ class alienShip {
                 }, 300)
 
             } else {
-                alert("But the USS Schwarzenegger survives and attacks again!")
+                alert("But the ship is still in-tack, and you fire back!")
                 USS.attack(alienShipsArr[i])
             }
         } else {
-            alert("The alien ship attacks but misses!")
-            alert("USS Schwarzenegger attacks again!")
+            alert("The alien ship fires a laser in your direciton, but it just misses!")
             USS.attack(alienShipsArr[i])
         }
 
@@ -89,10 +90,10 @@ let USS = {
     accuracy: 0.7,
 
     attack(spaceship) {
-        alert("The USS Schwarzenegger attacks alien spaceship!")
+        alert("You aim your lasers at the alien spaceship and FIRE!")
         if (Math.random() < this.accuracy) {
             // decreases alienSpaceship's hull number 
-            alert("The USS hits the alien spaceship and causes major damage!")
+            alert("PING! You see hit your target and see damage to the alien spaceship.")
             spaceship.hull = spaceship.hull - this.firePower;
             enemyHull.nodeValue = `Hull : ${alienShipsArr[i].hull}`;
             if (spaceship.hull <= 0) {
@@ -102,11 +103,11 @@ let USS = {
                 }, 500)
 
             } else {
-                alert("But the alien spaceship attacks back!")
+                alert("The alien spaceship fires back!")
                 alienShipsArr[i].attack(USS)
             }
         } else {
-            alert("USS Schwarzenegger attacks but misses!")
+            alert("You fire but the laser just misses the target!")
             alienShipsArr[i].attack(USS)
         }
 
@@ -114,7 +115,7 @@ let USS = {
     }
 }
 
-let alienShipsArr = []
+
 
 for (let i = 0; i <= 6; i++) {
     let newShip = new alienShip()
@@ -183,12 +184,17 @@ function alienStats(name) {
 
 function playGame() {
 
+    if (played === false) {
+        alert("Earth has been attacked by a horde of aliens! You are the captain of the USS Schwarzenegger, on a mission to destroy every last alien ship. Battle the aliens as you try to destroy them with your lasers. There are six alien ships. After you have destroyed a ship, you have the option to make a hasty retreat.")
+    }
+
     // hides play button
     hide()
 
     setTimeout(function () {
+        
         USS.attack(alienShipsArr[i])
-    }, 300);
+    }, 100);
 
 }
 
@@ -201,30 +207,31 @@ function br(where) {
 function flightOrFight() {
 
     i++;
-
     if (i >= alienShipsArr.length) {
         alert("You defeated all the alien ships!")
         playAgain()
     }
-
-    let input = prompt(`The alien ship went kabloo-ey. The USS Schwarzenegger's hull is at ${USS.hull}. Would you like to retreat or fight the next enemy spaceship? Please type either 'fight' or 'retreat'.`);
+    let input = prompt(`BOOM! The alien ship explodes as you watch the remaining bits float away into space. The USS Schwarzenegger's hull is at ${USS.hull}. You consider whether you should continue fighting the incoming aliens or retreat. Please type either 'fight' or 'retreat'.`);
     let answer = input.toLowerCase();
 
     if (answer === "fight") {
 
-        // change enemy stats in the dom
+         
+             // change enemy stats in the dom
         enemyHull.nodeValue = `Hull : ${alienShipsArr[i].hull}`;
         enemyFirePower.nodeValue = `Firepower : ${alienShipsArr[i].firePower}`;
         enemyAccuracy.nodeValue = `Accuracy : ${alienShipsArr[i].accuracy}`;
+        alert("You see another alien spaceship approaching quickly.")
         setTimeout(function () {
             USS.attack(alienShipsArr[i]);
         }, 500)
 
+        
 
-
+       
 
     } else if (answer === "retreat") {
-        alert("The USS Schwarzenegger wisely retreats. It will return to destroy more alien spaceships...");
+        alert("You wisely retreat the USS Schwarzenegger away from the incoming alien ships and plan to return at a later time...");
         return;
 
     } else {
@@ -235,7 +242,7 @@ function flightOrFight() {
 }
 
 function gameOver() {
-    alert("The alien spaceship destroyed the USS Schwarzenegger. Game over.")
+    alert("You hear a loud BOOM and then a bright light floods your senses and then. Blackness. You wake up with ringing in your ears. As you look around, your eyes blurred, you realize you are not in your spaceship anymore. The aliens have destroyed the USS Schwarzenegger and you are now their hostage. Game over.")
     playAgain()
 }
 
@@ -244,7 +251,34 @@ function playAgain() {
     let answer = pr.toLowerCase();
 
     if (answer === "yes") {
-        alert("Let's play again!")
+
+        i = 0;
+        played = true;
+
+        // for (let i = 0; i <= 6; i++) {
+        //     let newShip = new alienShip()
+        //     alienShipsArr.push(newShip)
+        // }
+
+        // alienShipsArr[i].hull = 5;
+        // alienShipsArr[i].firePower = 6;
+        // alienShipsArr[i].accuracy = 0.5;
+
+
+        // enemyHull.nodeValue = `Hull : ${alienShipsArr[i].hull}`;
+        // enemyFirePower.nodeValue = `Firepower : ${alienShipsArr[i].firePower}`;
+        // enemyAccuracy.nodeValue = `Accuracy : ${alienShipsArr[i].accuracy}`;
+
+        // USS.hull = 20;
+        // console.log(USS.hull)
+        // playerHull.nodeValue = `Hull : ${USS.hull}`;
+
+        alert("We have miracously revived your spaceship. Let's battle more aliens!")
+
+        // setTimeout(function() {
+        //     playGame()
+        // }, 300)
+
     } else if (answer === "no") {
         alert("We will hopefully see you soon.");
         return;
