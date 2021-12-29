@@ -38,14 +38,18 @@ developments or options. - You win the game if you destroy all of the aliens. - 
 let playerStats = document.getElementById("playerStats")
 let enemyStats = document.getElementById("enemyStats")
 let playBtn = document.getElementById("playBtn")
-let i = 0;
+let i = 1;
 let alienShipsArr = []
 let enemyHull;
 let enemyFirepower;
 let enemyAccuracy;
 let played = false;
 
-// creates class of alien spaceships
+function playGame() {
+    alert("Earth has been attacked by a horde of aliens! You are the captain of the USS Schwarzenegger, on a mission to destroy every last alien ship. Battle the aliens as you try to destroy them with your lasers. There are six alien ships. The aliens' weakness is that they are too logical and attack one at a time: they will wait to see the outcome of a battle before deploying another alien ship.After you have destroyed a ship, you have the option to make a hasty retreat.")
+    USS.attack(alienShipsArr[i])
+}
+
 class alienShip {
     constructor(hull, firePower, accuracy) {
         this.hull = Math.floor(Math.random() * 4) + 3;
@@ -53,7 +57,6 @@ class alienShip {
         this.accuracy = (Math.floor(Math.random() * 3) + 6) / 10;
     }
 
-    // method to attack other spaceship
     attack(spaceship) {
 
         if (Math.random() < alienShipsArr[i].accuracy) {
@@ -64,7 +67,7 @@ class alienShip {
                 playerHull.nodeValue = `Hull : 0`;
                 setTimeout(function () {
                     gameOver()
-                }, 300)
+                }, 50)
 
             } else {
                 alert("But the ship is still in-tack, and you fire back!")
@@ -81,7 +84,6 @@ class alienShip {
 
 }
 
-
 // create spaceship objects
 let USS = {
 
@@ -97,10 +99,14 @@ let USS = {
             spaceship.hull = spaceship.hull - this.firePower;
             enemyHull.nodeValue = `Hull : ${alienShipsArr[i].hull}`;
             if (spaceship.hull <= 0) {
+
                 enemyHull.nodeValue = `Hull : 0`;
                 setTimeout(function () {
+                    i++;
                     flightOrFight()
-                }, 500)
+                }, 50)
+
+
 
             } else {
                 alert("The alien spaceship fires back!")
@@ -123,8 +129,6 @@ for (let i = 0; i <= 6; i++) {
 }
 
 alienStats(alienShipsArr[i])
-
-
 
 
 
@@ -182,22 +186,6 @@ function alienStats(name) {
 }
 
 
-function playGame() {
-
-    if (played === false) {
-        alert("Earth has been attacked by a horde of aliens! You are the captain of the USS Schwarzenegger, on a mission to destroy every last alien ship. Battle the aliens as you try to destroy them with your lasers. There are six alien ships. After you have destroyed a ship, you have the option to make a hasty retreat.")
-    }
-
-    // hides play button
-    hide()
-
-    setTimeout(function () {
-        
-        USS.attack(alienShipsArr[i])
-    }, 100);
-
-}
-
 // function to add break statement 
 function br(where) {
     let br = document.createElement("br");
@@ -206,38 +194,43 @@ function br(where) {
 
 function flightOrFight() {
 
-    i++;
     if (i >= alienShipsArr.length) {
         alert("You defeated all the alien ships!")
         playAgain()
+        return;
     }
-    let input = prompt(`BOOM! The alien ship explodes as you watch the remaining bits float away into space. The USS Schwarzenegger's hull is at ${USS.hull}. You consider whether you should continue fighting the incoming aliens or retreat. Please type either 'fight' or 'retreat'.`);
+
+    let input = prompt(`BOOM! The alien ship explodes as you watch the remaining parts of the aircraft float away into space. The USS Schwarzenegger's hull is at ${USS.hull}. You consider whether you should continue fighting the incoming aliens or retreat. Please type either 'fight' or 'retreat'.`);
     let answer = input.toLowerCase();
+
 
     if (answer === "fight") {
 
          
-             // change enemy stats in the dom
-        enemyHull.nodeValue = `Hull : ${alienShipsArr[i].hull}`;
-        enemyFirePower.nodeValue = `Firepower : ${alienShipsArr[i].firePower}`;
-        enemyAccuracy.nodeValue = `Accuracy : ${alienShipsArr[i].accuracy}`;
-        alert("You see another alien spaceship approaching quickly.")
-        setTimeout(function () {
-            USS.attack(alienShipsArr[i]);
-        }, 500)
+            // change enemy stats in the dom
+            enemyHull.nodeValue = `Hull : ${alienShipsArr[i].hull}`;
+            enemyFirePower.nodeValue = `Firepower : ${alienShipsArr[i].firePower}`;
+            enemyAccuracy.nodeValue = `Accuracy : ${alienShipsArr[i].accuracy}`;
+            setTimeout(function () {
+                alert(`You see alien spaceship no. ${i} approaching quickly.`)
+                USS.attack(alienShipsArr[i]);
+            }, 50)
 
-        
 
-       
 
     } else if (answer === "retreat") {
         alert("You wisely retreat the USS Schwarzenegger away from the incoming alien ships and plan to return at a later time...");
+        hide()
         return;
 
+    } else if (answer === "") {
+        alert("Invalid answer. Please try again!");
+        flightOrFight()
     } else {
         alert("Invalid answer. Please try again!");
         flightOrFight()
     }
+
 
 }
 
@@ -252,8 +245,8 @@ function playAgain() {
 
     if (answer === "yes") {
 
-        i = 0;
-        played = true;
+        // i = 0;
+        // played = true;
 
         // for (let i = 0; i <= 6; i++) {
         //     let newShip = new alienShip()
@@ -273,19 +266,20 @@ function playAgain() {
         // console.log(USS.hull)
         // playerHull.nodeValue = `Hull : ${USS.hull}`;
 
-        alert("We have miracously revived your spaceship. Let's battle more aliens!")
-
+        alert("Restart webpage to battle more aliens!")
+        hide()
         // setTimeout(function() {
         //     playGame()
         // }, 300)
 
     } else if (answer === "no") {
         alert("We will hopefully see you soon.");
-        return;
+        hide()
     } else {
         alert("Invalid answer. Please try again!");
         playAgain()
     }
+    return;
 }
 
 function hide() {
